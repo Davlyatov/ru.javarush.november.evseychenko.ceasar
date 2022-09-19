@@ -116,7 +116,7 @@
                 <version>3.10.1</version>
                 <configuration>
                     <source>12</source>
-                    <target>121</target>
+                    <target>12</target>
                 </configuration>
             </plugin>
             <plugin>
