@@ -7,9 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public class Encrypt extends encrypterMainController {
-    private static final String alphabet = "абвгдеёжзиклмнопрстуфхцчшщъыьэюя.,\":-!? ";
-    public String Encryption(File file, int ROT) throws IOException {
+public class Encrypt extends EncrypterMainController {
+    public String encryption(File file, int rot) throws IOException {
         LinkedList<String> textList = new LinkedList<>();
         LinkedList<String> encryptedTextList = new LinkedList<>();
         Scanner scanner = new Scanner(file);
@@ -25,23 +24,23 @@ public class Encrypt extends encrypterMainController {
                     char symbol = tempLine.charAt(i);
                     if (Character.isLetter(symbol)) {
                         if (Character.isLowerCase(symbol)) {
-                            if (alphabet.indexOf(symbol) != -1) {
-                                encryptedLine += alphabet.charAt((alphabet.indexOf(symbol) + ROT) % alphabet.length());
+                            if (ALPHABET.indexOf(symbol) != -1) {
+                                encryptedLine += ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot) % ALPHABET.length());
                             } else {
                                 encryptedLine += symbol;
                             }
                         } else {
                             symbol = Character.toLowerCase(symbol);
-                            if (alphabet.indexOf(symbol) != -1) {
-                                String temp = String.valueOf(alphabet.charAt((alphabet.indexOf(symbol) + ROT) % alphabet.length())).toUpperCase();
+                            if (ALPHABET.indexOf(symbol) != -1) {
+                                String temp = String.valueOf(ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot) % ALPHABET.length())).toUpperCase();
                                 encryptedLine += temp;
                             }else {
                                 encryptedLine += symbol;
                             }
                         }
                     } else {
-                        if (alphabet.indexOf(symbol) != -1) {
-                            encryptedLine += alphabet.charAt((alphabet.indexOf(symbol) + ROT) % alphabet.length());
+                        if (ALPHABET.indexOf(symbol) != -1) {
+                            encryptedLine += ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot) % ALPHABET.length());
                         } else {
                             encryptedLine += symbol;
                         }

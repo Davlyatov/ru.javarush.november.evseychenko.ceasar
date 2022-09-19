@@ -129,7 +129,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.danilevseychenko.cesarencrypter/com.danilevseychenko.cesarencrypter.encrypterMain
+                                com.danilevseychenko.cesarencrypter/com.danilevseychenko.cesarencrypter.EncrypterMain
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

@@ -8,11 +8,10 @@ import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class Decrypt extends encrypterMainController{
+public class Decrypt extends EncrypterMainController {
 
-    private static final String alphabet = "абвгдеёжзиклмнопрстуфхцчшщъыьэюя.,\":-!? ";
 
-    public String decryptionStart(File file,int ROT) throws IOException{
+    public String decryptionStart(File file,int rot) throws IOException{
         Scanner scanner = new Scanner(file);
         LinkedList<String> encryptedTextList = new LinkedList<>();
         LinkedList<String> decryptedTextList;
@@ -21,17 +20,17 @@ public class Decrypt extends encrypterMainController{
         }
         scanner.close();
         String tempPath="";
-        if (ROT==0){
+        if (rot==0){
             decryptedTextList = bruteForce(encryptedTextList);
-            tempPath = WriteFile(decryptedTextList,file);
+            tempPath = writeFile(decryptedTextList,file);
         }else {
-            decryptedTextList = Decryption(encryptedTextList,ROT);
-            tempPath = WriteFile(decryptedTextList,file);
+            decryptedTextList = decryption(encryptedTextList,rot);
+            tempPath = writeFile(decryptedTextList,file);
         }
         return tempPath;
     }
 
-    private String WriteFile(LinkedList<String> decryptedTextList, File file) throws IOException {
+    private String writeFile(LinkedList<String> decryptedTextList, File file) throws IOException {
         Path path = Path.of(file.toURI());
         String[] tempArray = path.toString().split(".txt");
         String tempPath = tempArray[0]+"Decrypted.txt";
@@ -46,8 +45,8 @@ public class Decrypt extends encrypterMainController{
         return tempPath;
     }
 
-    private LinkedList<String> Decryption(LinkedList<String> encryptedTextList, int ROT) {
-        ROT = -ROT;
+    private LinkedList<String> decryption(LinkedList<String> encryptedTextList, int rot) {
+        rot = -rot;
         LinkedList<String> decryptedTextList = new LinkedList<>();
         for (int i = 0; i < encryptedTextList.size(); i++) {
             String tempLine = encryptedTextList.get(i);
@@ -58,24 +57,24 @@ public class Decrypt extends encrypterMainController{
                     if (Character.isLetter(symbol)){
                         if (Character.isUpperCase(symbol)){
                             symbol = Character.toLowerCase(symbol);
-                            if (alphabet.indexOf(symbol) != -1){
+                            if (ALPHABET.indexOf(symbol) != -1){
                                 char temp;
-                                if (alphabet.indexOf(symbol)+ROT<0){
-                                    temp = alphabet.charAt((alphabet.indexOf(symbol) + ROT + alphabet.length()) % alphabet.length());
+                                if (ALPHABET.indexOf(symbol)+rot<0){
+                                    temp = ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot + ALPHABET.length()) % ALPHABET.length());
                                 } else {
-                                    temp = alphabet.charAt((alphabet.indexOf(symbol) + ROT) % alphabet.length());
+                                    temp = ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot) % ALPHABET.length());
                                 }
                                 decryptedLine += Character.toUpperCase(temp);
                             } else {
                                 decryptedLine += symbol;
                             }
                         } else {
-                            if (alphabet.indexOf(symbol) != -1){
+                            if (ALPHABET.indexOf(symbol) != -1){
                                 char temp;
-                                if (alphabet.indexOf(symbol)+ROT<0){
-                                    temp = alphabet.charAt((alphabet.indexOf(symbol) + ROT + alphabet.length()) % alphabet.length());
+                                if (ALPHABET.indexOf(symbol)+rot<0){
+                                    temp = ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot + ALPHABET.length()) % ALPHABET.length());
                                 } else {
-                                    temp = alphabet.charAt((alphabet.indexOf(symbol) + ROT) % alphabet.length());
+                                    temp = ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot) % ALPHABET.length());
                                 }
                                 decryptedLine+=temp;
                             } else {
@@ -83,12 +82,12 @@ public class Decrypt extends encrypterMainController{
                             }
                         }
                     } else {
-                        if (alphabet.indexOf(symbol) != -1){
+                        if (ALPHABET.indexOf(symbol) != -1){
                             char temp;
-                            if (alphabet.indexOf(symbol)+ROT<0){
-                                temp = alphabet.charAt((alphabet.indexOf(symbol) + ROT + alphabet.length()) % alphabet.length());
+                            if (ALPHABET.indexOf(symbol)+rot<0){
+                                temp = ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot + ALPHABET.length()) % ALPHABET.length());
                             } else {
-                                temp = alphabet.charAt((alphabet.indexOf(symbol) + ROT) % alphabet.length());
+                                temp = ALPHABET.charAt((ALPHABET.indexOf(symbol) + rot) % ALPHABET.length());
                             }
                             decryptedLine+=temp;
                         } else {
@@ -106,10 +105,10 @@ public class Decrypt extends encrypterMainController{
         boolean c = false;
         LinkedList<String> decryptedTextList = new LinkedList<>();
         int i=0;
-        while (!c&&i!=alphabet.length()){
+        while (!c&&i!=ALPHABET.length()){
             decryptedTextList.clear();
-            decryptedTextList = Decryption(encryptedTextList,i);
-            c = ChectText(decryptedTextList);
+            decryptedTextList = decryption(encryptedTextList,i);
+            c = chectText(decryptedTextList);
             if (!c){
                 i+=1;
             }
@@ -117,7 +116,7 @@ public class Decrypt extends encrypterMainController{
         return decryptedTextList;
     }
 
-    private boolean ChectText(LinkedList<String> decryptedTextList) {
+    private boolean chectText(LinkedList<String> decryptedTextList) {
         String s = decryptedTextList.getFirst();
         char[] chars = s.toCharArray();
         if (chars.length!=0) {

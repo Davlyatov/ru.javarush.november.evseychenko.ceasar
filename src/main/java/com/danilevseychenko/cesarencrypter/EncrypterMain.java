@@ -7,10 +7,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class encrypterMain extends Application {
+public class EncrypterMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(encrypterMain.class.getResource("encrypter-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(EncrypterMain.class.getResource("encrypter-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Шифратор/Дешифратор Цезаря");
         stage.setScene(scene);

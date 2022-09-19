@@ -6,13 +6,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class encrypterMainController extends Window {
+public class EncrypterMainController extends Window {
+
+    public static final String ALPHABET = "абвгдеёжзиклмнопрстуфхцчшщъыьэюя.,\":-!? ";
 
     @FXML
     private CheckBox bruteForceCB;
@@ -94,15 +94,15 @@ public class encrypterMainController extends Window {
                     if (!temp.matches("\\d*")) {
                         ROTTextField.setText(temp.replaceAll("[^\\d]", ""));
                     }
-                    int ROT = Integer.parseInt(ROTTextField.getText());
-                    if (ROT >= 1 && ROT <= 41) {
+                    int rot = Integer.parseInt(ROTTextField.getText()); // Считывание ключа сдвига с TextField
+                    if (rot >= 1 && rot <= 41) {
                         Encrypt encrypt = new Encrypt();
-                        done = encrypt.Encryption(file, ROT);
+                        done = encrypt.encryption(file, rot);
                     } else {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("");
                         alert.setHeaderText("Неверный сдвиг");
-                        alert.setContentText("Введите сдвиг от 1 до 41!");
+                        alert.setContentText("Введите сдвиг от 1 до "+ ALPHABET.length()+"!");
                         alert.show();
                     }
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -114,7 +114,7 @@ public class encrypterMainController extends Window {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("");
                     alert.setHeaderText("Неверный сдвиг");
-                    alert.setContentText("Введите сдвиг от 1 до 41!");
+                    alert.setContentText("Введите сдвиг от 1 до "+ ALPHABET.length()+"!");
                     alert.show();
                 }
             } else if (decryptRadioBtn.isSelected()) {
@@ -133,12 +133,12 @@ public class encrypterMainController extends Window {
                         done = decrypt.decryptionStart(file, ROT);
                     } else if (!bruteForceCB.isSelected() && ROT >= 1 && ROT <= 41) {
                         Decrypt decrypt = new Decrypt();
-                         done = decrypt.decryptionStart(file, ROT);
+                        done = decrypt.decryptionStart(file, ROT);
                     } else {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("");
                         alert.setHeaderText("Неверный параметры");
-                        alert.setContentText("Введите сдвиг от 1 до 41 или выберите Brute Force!");
+                        alert.setContentText("Введите сдвиг от 1 до "+ ALPHABET.length()+"! или выберите Brute Force!");
                         alert.show();
                     }
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -150,7 +150,7 @@ public class encrypterMainController extends Window {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("");
                     alert.setHeaderText("Неверный параметры");
-                    alert.setContentText("Введите сдвиг от 1 до 41 или выберите Brute Force!");
+                    alert.setContentText("Введите сдвиг от 1 до "+ ALPHABET.length()+"! или выберите Brute Force!");
                     alert.show();
                 }
             }else {
